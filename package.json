@@ -1,0 +1,69 @@
+{
+    "name": "ermanager",
+    "version": "0.1.0",
+    "description": "EscapeRoom management application",
+    "main": "index.js",
+    "scripts": {
+        "start": "node src/web-server/index.js",
+        "dev": "nodemon src/web-server/index.js",
+        "build": "webpack --watch",
+        "dev-server": "webpack-dev-server",
+        "lint": "eslint src",
+        "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
+        "test": "jest --config=jest.config.json"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/TomaszTokarz/ERmanager.git"
+    },
+    "keywords": [
+        "Escape",
+        "Room",
+        "Management"
+    ],
+    "author": "Tomasz Tokarz",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/TomaszTokarz/ERmanager/issues"
+    },
+    "homepage": "https://github.com/TomaszTokarz/ERmanager#readme",
+    "dependencies": {
+        "express": "^4.17.1",
+        "history": "^5.0.0",
+        "mongodb": "^3.6.3",
+        "mongoose": "^5.11.8",
+        "prop-types": "^15.7.2",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1",
+        "react-redux": "^7.2.2",
+        "react-router-dom": "^5.2.0",
+        "redux": "^4.0.5",
+        "socket.io": "^3.0.4",
+        "styled-components": "^5.2.1",
+        "styled-icons": "^10.23.0"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.7.5",
+        "@babel/core": "^7.7.5",
+        "@babel/plugin-proposal-class-properties": "^7.7.4",
+        "@babel/plugin-proposal-object-rest-spread": "^7.7.4",
+        "@babel/preset-env": "^7.7.6",
+        "@babel/preset-react": "^7.7.4",
+        "babel-eslint": "^10.0.3",
+        "babel-loader": "^8.0.6",
+        "enzyme": "^3.10.0",
+        "enzyme-adapter-react-16": "^1.10.0",
+        "enzyme-to-json": "^3.4.3",
+        "eslint": "^5.15.2",
+        "eslint-plugin-mocha": "^6.2.0",
+        "eslint-plugin-react": "^7.12.4",
+        "jest": "^24.9.0",
+        "nodemon": "^2.0.6",
+        "prettier": "^1.18.2",
+        "raf": "^3.3.2",
+        "socket.io-client": "^3.0.4",
+        "webpack": "^4.29.6",
+        "webpack-cli": "^3.3.0",
+        "webpack-dev-server": "^3.2.1"
+    }
+}
