@@ -1,27 +1,16 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1:27017/test-db', {
+mongoose.connect('mongodb://127.0.0.1:27017/escaperoom-db', {
     useUnifiedTopology: true,
     useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
 });
 
-const User = mongoose.model('User', {
-    name: {
-        type: String,
-    },
-    age: {
-        type: Number,
-    },
-});
-
-// const garry = new User({
-//     name: 'Garry Poker',
-//     age: 666
+// const admin = new User({
+//     name: 'admin',
+//     password: 'admin'
 // });
 
-// garry.save().then(() => {
+// admin.save().then(() => {
 // }).catch((error) => {
 //     console.log(error);
 // });
