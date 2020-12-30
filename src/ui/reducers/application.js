@@ -17,6 +17,12 @@ export default (state = {}, action) => {
                 ...action.payload,
             };
 
+        case actionType.SET_SETTINGS:
+            return {
+                ...state,
+                ...action.payload,
+            };
+
         default:
             return state;
     }

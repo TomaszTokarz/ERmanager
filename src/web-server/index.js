@@ -25,9 +25,40 @@ io.on('connection', socket => {
     socket.on('login', async loggedUser => {
         const user = await User.findOneAndUpdate(loggedUser, {
             token: 'test123token',
+            error: null,
         });
 
         socket.emit('token', user.token);
+    });
+
+    socket.on('get_settings', async data => {
+        console.log(data);
+
+        var mockedStartTime = new Date().getTime() - Math.random() * 3200000;
+
+        socket.emit('settings', {
+            server: 'UP',
+            db: 'UP',
+            adminPanels: 1,
+            time: new Date().getTime(),
+            rooms: [
+                {
+                    name: 'Mistery of the Meth Man',
+                    roomPanels: 1,
+                    id: 'fakeId123',
+                    status: 'READY',
+                },
+                {
+                    name: 'Claustrophobic Hell',
+                    roomPanels: 1,
+                    id: 'fakeIdForNextRooMM666',
+                    status: 'IN_GAME',
+                    startTime: mockedStartTime,
+                    endTime: mockedStartTime + 3600000,
+                },
+            ],
+            error: null,
+        });
     });
 });
 

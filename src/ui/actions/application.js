@@ -19,8 +19,16 @@ export const setToken = token => ({
     },
 });
 
+export const setSettings = settings => ({
+    type: actionType.SET_SETTINGS,
+    payload: {
+        settings,
+    },
+});
+
 export const actionType = {
     LOG_IN: 'LOG_IN',
     LOG_OUT: 'LOG_OUT',
     SET_TOKEN: 'SET_TOKEN',
+    SET_SETTINGS: 'SET_SETTINGS',
 };

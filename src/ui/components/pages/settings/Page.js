@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import socket from '../../../sockets/socket';
+
 const Item = styled.div`
     line-height: 2em;
     color: '#444';
@@ -8,6 +10,15 @@ const Item = styled.div`
 `;
 
 export class SettingsPage extends React.Component {
+    constructor(props) {
+        super(props);
+
+        socket.emit('get_settings', {
+            location: location.pathname.replace('/', ''),
+            token: 'fakeToken',
+        });
+    }
+
     render() {
         return (
             <div>

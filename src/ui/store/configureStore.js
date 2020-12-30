@@ -5,7 +5,7 @@ import applicationReducer from '../reducers/application';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export default () => {
+const configureStore = () => {
     return createStore(
         combineReducers({
             application: applicationReducer,
@@ -13,3 +13,5 @@ export default () => {
         composeEnhancers(applyMiddleware(thunk)),
     );
 };
+
+export default configureStore();
