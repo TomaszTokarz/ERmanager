@@ -1,7 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 import socket from '../../../sockets/socket';
+import Rooms from './Rooms';
 
 const Item = styled.div`
     line-height: 2em;
@@ -14,7 +17,7 @@ export class SettingsPage extends React.Component {
         super(props);
 
         socket.emit('get_settings', {
-            location: location.pathname.replace('/', ''),
+            location: location.pathname,
             token: 'fakeToken',
         });
     }
@@ -22,16 +25,31 @@ export class SettingsPage extends React.Component {
     render() {
         return (
             <div>
-                <Item>Global Settings</Item>
-                <Item>Application Status</Item>
-                <Item>Database Status ?</Item>
-                <Item>Admin Panel Status, Open</Item>
                 <Item>
-                    Rooms List (with options, statuses, open, add, etc.)
+                    <button>Global settings</button>
+                </Item>
+                <Item>Application Status: {this.props.serverStatus}</Item>
+                <Item>Database Status: {this.props.dbStatus}</Item>
+                <Item>
+                    <Rooms rooms={this.props.rooms} />
                 </Item>
             </div>
         );
     }
 }
 
-export default SettingsPage;
+SettingsPage.propTypes = {
+    serverStatus: PropTypes.string,
+    dbStatus: PropTypes.string,
+    rooms: PropTypes.array,
+};
+
+const mapStateToProps = state => {
+    return {
+        serverStatus: state.application.settings.server,
+        dbStatus: state.application.settings.db,
+        rooms: state.application.settings.rooms,
+    };
+};
+
+export default connect(mapStateToProps)(SettingsPage);

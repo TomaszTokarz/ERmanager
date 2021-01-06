@@ -1,6 +1,15 @@
 import { actionType } from '../actions/application';
 
-export default (state = {}, action) => {
+export default (
+    state = {
+        settings: {
+            server: 'DOWN',
+            db: 'DOWN',
+            rooms: [],
+        },
+    },
+    action,
+) => {
     switch (action.type) {
         case actionType.LOG_IN:
             return {

@@ -6,7 +6,7 @@
     "scripts": {
         "start": "node src/web-server/index.js",
         "dev": "nodemon src/web-server/index.js",
-        "build": "webpack --watch",
+        "build": "webpack --mode development --watch",
         "dev-server": "webpack-dev-server",
         "lint": "eslint src",
         "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
