@@ -1,10 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import socket from '../../../sockets/socket';
 import Header from './Header';
 import Rooms from './Rooms';
+
+const Wrapper = styled.div`
+    width: 100%;
+`;
 
 export class AdminPage extends React.Component {
     constructor(props) {
@@ -18,10 +23,10 @@ export class AdminPage extends React.Component {
 
     render() {
         return (
-            <div>
+            <Wrapper>
                 <Header />
                 <Rooms rooms={this.props.rooms} />
-            </div>
+            </Wrapper>
         );
     }
 }

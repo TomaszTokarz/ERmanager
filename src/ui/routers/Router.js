@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import SettingsPage from '../ui/components/pages/settings/Page';
-import RoomPage from '../ui/components/pages/room/Page';
-import AdminPage from '../ui/components/pages/admin/Page';
+import SettingsPage from '../components/pages/settings/Page';
+import RoomPage from '../components/pages/room/Page';
+import AdminPage from '../components/pages/admin/Page';
 
 const MainComponent = () => (
     <div>
