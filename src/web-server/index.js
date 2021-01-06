@@ -5,6 +5,7 @@ const http = require('http');
 const socketio = require('socket.io');
 
 const User = require('./db/models/user');
+const mocks = require('./mocks');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -34,33 +35,23 @@ io.on('connection', socket => {
     socket.on('get_settings', async data => {
         console.log(data);
 
-        var mockedStartTime = new Date().getTime() - Math.random() * 3200000;
-
         socket.emit('settings', {
             server: 'UP',
             db: 'UP',
             adminPanels: 1,
             time: new Date().getTime(),
-            rooms: [
-                {
-                    name: 'Mistery of the Meth Man',
-                    roomPanels: 1,
-                    id: 'fakeId123',
-                    path: '/mistery',
-                    status: 'READY',
-                },
-                {
-                    name: 'Claustrophobic Hell',
-                    roomPanels: 1,
-                    id: 'fakeIdForNextRooMM666',
-                    path: '/hell',
-                    status: 'IN_GAME',
-                    startTime: mockedStartTime,
-                    endTime: mockedStartTime + 3600000,
-                },
-            ],
+            rooms: mocks.rooms,
             error: null,
         });
+    });
+
+    socket.on('get_room', chosenRoom => {
+        socket.emit(
+            'room',
+            mocks.rooms.find(room => {
+                return room.path === chosenRoom.location;
+            }),
+        );
     });
 });
 

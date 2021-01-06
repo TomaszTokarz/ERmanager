@@ -30,6 +30,7 @@
     "dependencies": {
         "express": "^4.17.1",
         "history": "^5.0.0",
+        "moment": "^2.29.1",
         "mongodb": "^3.6.3",
         "mongoose": "^5.11.8",
         "prop-types": "^15.7.2",
