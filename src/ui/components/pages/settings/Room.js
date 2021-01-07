@@ -2,28 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import Button, { buttonStyle } from '../../basic/Button';
+
 const Link = styled.a`
-    line-height: 2.5em;
-    margin: 0 10px;
-    padding: 0 10px;
-    border: 1px solid #000;
-    text-decoration: none;
-    color: #000;
+    ${buttonStyle};
 `;
 
 export default class Room extends React.Component {
     render() {
+        const { room } = this.props;
+
         return (
             <div>
-                {this.props.room.name} - status: {this.props.room.status}
+                {room.name} - status: {room.status}
                 <Link
-                    href={this.props.room.path}
+                    href={room.path}
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    Go to
+                    Go To
                 </Link>
-                <button>...</button>
+                <Button name="..." />
             </div>
         );
     }

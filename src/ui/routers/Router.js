@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import SettingsPage from '../components/pages/settings/Page';
 import RoomPage from '../components/pages/room/Page';
 import AdminPage from '../components/pages/admin/Page';
+import AddRoomPage from '../components/pages/add-room/Page';
 
 const MainComponent = () => (
     <div>
@@ -29,6 +30,7 @@ class Router extends React.Component {
                     <Route path="/settings" component={SettingsPage} />
                     <Route path="/init" component={InitComponent} />
                     <Route path="/admin" component={AdminPage} />
+                    <Route path="/add-room" component={AddRoomPage} />
                     {this.props.rooms.map(room => {
                         return (
                             <Route

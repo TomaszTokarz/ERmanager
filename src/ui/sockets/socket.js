@@ -20,14 +20,10 @@ socket.on('first_connection', data => {
 });
 
 socket.on('token', token => {
-    console.log('token:', token);
-
     store.dispatch(setToken(token));
 });
 
 socket.on('settings', settings => {
-    console.log('settings:', settings);
-
     store.dispatch(setSettings(settings));
 });
 
@@ -36,8 +32,6 @@ socket.emit('get_room', {
 });
 
 socket.on('room', room => {
-    console.log('room:', room);
-
     store.dispatch(setRoom(room));
 });
 
