@@ -18,7 +18,7 @@ export default class Rooms extends React.Component {
         return (
             <Wrapper>
                 {this.props.rooms.map(room => {
-                    return <Room key={room.id} room={room} />;
+                    return <Room key={room.name} room={room} />;
                 })}
             </Wrapper>
         );

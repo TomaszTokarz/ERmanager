@@ -28,7 +28,7 @@ socket.on('settings', settings => {
 });
 
 socket.emit('get_room', {
-    location: location.pathname,
+    location: location.pathname.replace('/', ''),
 });
 
 socket.on('room', room => {

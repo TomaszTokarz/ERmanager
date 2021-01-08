@@ -34,7 +34,7 @@ class Router extends React.Component {
                     {this.props.rooms.map(room => {
                         return (
                             <Route
-                                key={room.id}
+                                key={room.name}
                                 path={room.path}
                                 component={RoomPage}
                             />

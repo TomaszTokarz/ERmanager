@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import socket from '../../../sockets/socket';
+import PropTypes from 'prop-types';
 
 import Button from '../../basic/Button';
 import dimensions from '../../../styles/dimensions';
@@ -18,7 +21,7 @@ const Wrapper = styled.div`
         left: 0;
         width: 100%;
         height: 100%;
-        background: ${props => props.background};
+        background: url(${props => props.background});
         filter: blur(5px) brightness(0.4);
     }
 `;
@@ -60,7 +63,7 @@ export class AddRoomPage extends React.Component {
 
         reader.onload = (e => {
             this.setState({
-                background: `url(${e.target.result})`,
+                background: e.target.result,
             });
         }).bind(this);
 
@@ -70,7 +73,9 @@ export class AddRoomPage extends React.Component {
     addRoom(e) {
         e.preventDefault();
 
-        console.log(this.state);
+        socket.emit('add_room', this.state);
+
+        this.props.history.push('/settings');
     }
 
     render() {
@@ -129,12 +134,18 @@ export class AddRoomPage extends React.Component {
                                 !this.state.background
                             }
                         />
-                        <Button name="Cancel" />
+                        <Link to="/settings">
+                            <Button name="Cancel" />
+                        </Link>
                     </form>
                 </MainContainer>
             </Wrapper>
         );
     }
 }
+
+AddRoomPage.propTypes = {
+    history: PropTypes.string,
+};
 
 export default AddRoomPage;

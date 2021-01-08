@@ -5,6 +5,7 @@ const http = require('http');
 const socketio = require('socket.io');
 
 const User = require('./db/models/user');
+const Room = require('./db/models/room');
 const mocks = require('./mocks');
 
 const app = express();
@@ -33,25 +34,52 @@ io.on('connection', socket => {
     });
 
     socket.on('get_settings', async data => {
-        console.log(data);
+        const rooms = await Room.find({});
 
         socket.emit('settings', {
             server: 'UP',
             db: 'UP',
             adminPanels: 1,
             time: new Date().getTime(),
-            rooms: mocks.rooms,
+            rooms: rooms,
             error: null,
         });
     });
 
-    socket.on('get_room', chosenRoom => {
-        socket.emit(
-            'room',
-            mocks.rooms.find(room => {
-                return room.path === chosenRoom.location;
-            }),
-        );
+    socket.on('get_room', async chosenRoom => {
+        const room = await Room.findOne({
+            path: chosenRoom.location,
+        });
+
+        socket.emit('room', room);
+    });
+
+    socket.on('add_room', async room => {
+        const forbiddenPaths = ['admin', 'init', 'settings', 'add-room'];
+        const existingRoom = await Room.find({
+            $or: [
+                {
+                    name: room.name,
+                },
+                {
+                    path: room.path,
+                },
+            ],
+        });
+
+        if (!existingRoom && forbiddenPaths.indexOf(room.path) === -1) {
+            new Room({
+                ...room,
+                status: 'READY',
+            })
+                .save()
+                .then(() => {})
+                .catch(error => {
+                    console.log(error);
+                });
+        } else {
+            console.log('Room exists');
+        }
     });
 });
 
