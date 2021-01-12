@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Button from '../../../components/basic/Button';
-import AddHint from '../../../components/basic/Modal';
+import AddHint from './crud/AddHint';
 
 const Wrapper = styled.div`
     display: flex;
@@ -22,6 +22,7 @@ export default class Rooms extends React.Component {
 
         this.state = {
             openAddHintWindow: false,
+            hintIndex: null,
         };
 
         this.addHint = this.addHint.bind(this);
@@ -30,6 +31,7 @@ export default class Rooms extends React.Component {
     addHint(e, data) {
         this.setState({
             openAddHintWindow: true,
+            hintIndex: data.hintIndex,
         });
     }
 
@@ -41,11 +43,17 @@ export default class Rooms extends React.Component {
                     name="Add Hint Here"
                     onClick={e =>
                         this.addHint(e, {
-                            index: 0,
+                            hintIndex: 0,
                         })
                     }
                 />
-                <AddHint openAddHintWindow={this.state.openAddHintWindow} />
+                {this.state.openAddHintWindow && (
+                    <AddHint
+                        visible={this.state.openAddHintWindow}
+                        room={this.props.room}
+                        hintIndex={this.state.hintIndex}
+                    />
+                )}
             </Wrapper>
         );
     }

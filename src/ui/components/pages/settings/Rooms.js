@@ -18,7 +18,7 @@ export default class Rooms extends React.Component {
                 <hr />
                 Rooms List:
                 {rooms.map(room => {
-                    return <Room key={room.id} room={room} />;
+                    return <Room key={room.name} room={room} />;
                 })}
                 <Link to="/add-room">
                     <Button name="Add Room" />

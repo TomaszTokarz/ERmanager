@@ -45,7 +45,7 @@ export default class Room extends React.Component {
                     <HamburgerMenu />
                 </Header>
                 <StatusBar>{this.props.room.status}</StatusBar>
-                <Hints />
+                <Hints room={this.props.room} />
             </Wrapper>
         );
     }
