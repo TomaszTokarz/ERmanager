@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { CheckSquare } from '@styled-icons/boxicons-regular/CheckSquare';
 
+import Button from '../../../basic/Button';
+import socket from '../../../../sockets/socket';
+
 const Wrapper = styled.div`
     display: flex;
     width: 100vw;
@@ -45,13 +48,13 @@ const Hint = styled.div`
 `;
 
 const HintInput = styled.input`
+    margin: 2em 0;
     font-size: 3em;
 `;
 
 const EditHint = styled.div`
     display: flex;
     align-items: center;
-    margin: 2em;
 `;
 
 const OptionsPanel = styled.div`
@@ -75,14 +78,15 @@ export default class AddHint extends React.Component {
 
         this.state = {
             isEditingHint: false,
-            hintIndex: null,
+            hintIndex: props.hintIndex,
             background: props.room.background,
-            hint: null,
+            text: '',
         };
 
         this.showHintInput = this.showHintInput.bind(this);
         this.updateHint = this.updateHint.bind(this);
         this.acceptHint = this.acceptHint.bind(this);
+        this.saveHint = this.saveHint.bind(this);
     }
 
     showHintInput() {
@@ -93,7 +97,7 @@ export default class AddHint extends React.Component {
 
     updateHint(e) {
         this.setState({
-            hint: e.target.value,
+            text: e.target.value,
         });
     }
 
@@ -103,14 +107,21 @@ export default class AddHint extends React.Component {
         });
     }
 
+    saveHint(e, room) {
+        socket.emit('add_hint', {
+            ...this.state,
+            roomId: room._id,
+        });
+    }
+
     render() {
         return (
             <Wrapper background={this.state.background}>
                 <MainContainer>
-                    <Clock>28:46</Clock>
+                    <Clock>21:37</Clock>
                     {!this.state.isEditingHint && (
                         <Hint onClick={this.showHintInput}>
-                            {this.state.hint || 'Click here to edit hint'}
+                            {this.state.text || 'Click here to edit hint'}
                         </Hint>
                     )}
                     {this.state.isEditingHint && (
@@ -119,7 +130,7 @@ export default class AddHint extends React.Component {
                                 name="hint"
                                 type="text"
                                 placeholder="Hint"
-                                value={this.state.hint}
+                                value={this.state.text}
                                 onChange={this.updateHint}
                             />
                             <SaveButton onClick={this.acceptHint} />
@@ -128,10 +139,18 @@ export default class AddHint extends React.Component {
                 </MainContainer>
                 <OptionsPanel>
                     <div>Background: YES</div>
-                    <div>Save</div>
+                    <Button
+                        onClick={e => this.saveHint(e, this.props.room)}
+                        name="Save"
+                    />
                     <div>Cancel</div>
                 </OptionsPanel>
             </Wrapper>
         );
     }
 }
+
+AddHint.propTypes = {
+    hintIndex: PropTypes.number,
+    room: PropTypes.object,
+};

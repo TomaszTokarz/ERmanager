@@ -61,4 +61,5 @@ export default class Rooms extends React.Component {
 
 Rooms.propTypes = {
     rooms: PropTypes.array,
+    room: PropTypes.object,
 };

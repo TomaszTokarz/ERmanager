@@ -71,6 +71,7 @@ io.on('connection', socket => {
             new Room({
                 ...room,
                 status: 'READY',
+                hints: [],
             })
                 .save()
                 .then(() => {})
@@ -80,6 +81,18 @@ io.on('connection', socket => {
         } else {
             console.log('Room exists');
         }
+    });
+
+    socket.on('add_hint', async hint => {
+        const room = await Room.findById(hint.roomId);
+        const { text, background } = hint;
+
+        room.hints.splice(hint.hintIndex, 0, {
+            text,
+            background,
+        });
+
+        room.save();
     });
 });
 

@@ -13,6 +13,10 @@ const Room = mongoose.model(
             required: true,
             trim: true,
         },
+        hints: {
+            type: Array,
+            required: true,
+        },
         status: {
             type: String,
             required: true,
