@@ -16,6 +16,8 @@ const LongButton = styled(Button)`
     margin: 0;
 `;
 
+const Hint = styled.div``;
+
 export default class Rooms extends React.Component {
     constructor(props) {
         super(props);
@@ -47,6 +49,21 @@ export default class Rooms extends React.Component {
                         })
                     }
                 />
+                {this.props.room.hints.map((hint, index) => {
+                    return (
+                        <Hint key={hint.text}>
+                            <div>{hint.text}</div>
+                            <Button
+                                name="Add Hint Here"
+                                onClick={e =>
+                                    this.addHint(e, {
+                                        hintIndex: ++index,
+                                    })
+                                }
+                            />
+                        </Hint>
+                    );
+                })}
                 {this.state.openAddHintWindow && (
                     <AddHint
                         visible={this.state.openAddHintWindow}
