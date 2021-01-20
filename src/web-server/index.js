@@ -7,6 +7,7 @@ const socketio = require('socket.io');
 const User = require('./db/models/user');
 const Room = require('./db/models/room');
 const mocks = require('./mocks');
+const { crop, optimize } = require('./sharp/image');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -67,9 +68,17 @@ io.on('connection', socket => {
             ],
         });
 
-        if (!existingRoom && forbiddenPaths.indexOf(room.path) === -1) {
+        const background = await crop(room.background, {
+            width: 1280,
+            height: 720,
+        }).then(img => {
+            return optimize(img);
+        });
+
+        if (!existingRoom.length && forbiddenPaths.indexOf(room.path) === -1) {
             new Room({
                 ...room,
+                background,
                 status: 'READY',
                 hints: [],
             })
@@ -79,7 +88,7 @@ io.on('connection', socket => {
                     console.log(error);
                 });
         } else {
-            console.log('Room exists');
+            console.log('Room exists, or path is incorrect');
         }
     });
 

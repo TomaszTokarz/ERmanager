@@ -23,6 +23,7 @@ const Wrapper = styled.div`
         width: 100%;
         height: 100%;
         background: url(${props => props.background});
+        background-size: cover;
         filter: blur(5px) brightness(0.4);
     }
 `;
@@ -143,7 +144,10 @@ export default class AddHint extends React.Component {
                         onClick={e => this.saveHint(e, this.props.room)}
                         name="Save"
                     />
-                    <div>Cancel</div>
+                    <Button
+                        onClick={this.props.closeAddHintWindow}
+                        name="Cancel"
+                    />
                 </OptionsPanel>
             </Wrapper>
         );
@@ -153,4 +157,5 @@ export default class AddHint extends React.Component {
 AddHint.propTypes = {
     hintIndex: PropTypes.number,
     room: PropTypes.object,
+    closeAddHintWindow: PropTypes.func,
 };

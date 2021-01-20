@@ -11,7 +11,6 @@ const Wrapper = styled.div`
     display: flex;
     width: 100vw;
     height: 100vh;
-    background-size: cover;
     position: relative;
 
     &:before {
@@ -22,6 +21,7 @@ const Wrapper = styled.div`
         width: 100%;
         height: 100%;
         background: url(${props => props.background});
+        background-size: cover;
         filter: blur(5px) brightness(0.4);
     }
 `;
