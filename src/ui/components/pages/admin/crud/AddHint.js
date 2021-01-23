@@ -3,61 +3,22 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { CheckSquare } from '@styled-icons/boxicons-regular/CheckSquare';
 
+import RoomScreen from '../../../complex/RoomScreen';
 import Button from '../../../basic/Button';
 import socket from '../../../../sockets/socket';
-import colors from '../../../../styles/colors';
-
-const Wrapper = styled.div`
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    background: url(${props => props.background});
-    background-position: center;
-    background-size: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-`;
-
-const MainContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    height: 100%;
-    width: 100%;
-    color: ${props => props.fontColor};
-`;
-
-const Clock = styled.div`
-    font-size: 5em;
-`;
 
 const Hint = styled.div`
-    margin: 2em;
-    font-size: 3em;
     cursor: pointer;
 `;
 
 const HintInput = styled.input`
     margin: 2em 0;
-    font-size: 3em;
+    font-size: 1em;
 `;
 
 const EditHint = styled.div`
     display: flex;
     align-items: center;
-`;
-
-const OptionsPanel = styled.div`
-    position: absolute;
-    font-size: 2em;
-    opacity: 0.2;
-
-    &:hover {
-        opacity: 1;
-    }
 `;
 
 const SaveButton = styled(CheckSquare)`
@@ -74,7 +35,7 @@ export default class AddHint extends React.Component {
             hintIndex: props.hintIndex,
             background: props.room.background,
             text: '',
-            fontColor: `${colors.fontColorMain}`,
+            fontColor: props.room.fontColor,
         };
 
         this.showHintInput = this.showHintInput.bind(this);
@@ -117,15 +78,16 @@ export default class AddHint extends React.Component {
 
     render() {
         return (
-            <Wrapper background={this.state.background}>
-                <MainContainer fontColor={this.state.fontColor}>
-                    <Clock>21:37</Clock>
-                    {!this.state.isEditingHint && (
+            <RoomScreen
+                background={this.state.background}
+                fontColor={this.state.fontColor}
+                room={this.props.room}
+                hint={
+                    !this.state.isEditingHint ? (
                         <Hint onClick={this.showHintInput}>
                             {this.state.text || 'Click here to edit hint'}
                         </Hint>
-                    )}
-                    {this.state.isEditingHint && (
+                    ) : (
                         <EditHint>
                             <HintInput
                                 name="hint"
@@ -136,28 +98,30 @@ export default class AddHint extends React.Component {
                             />
                             <SaveButton onClick={this.acceptHint} />
                         </EditHint>
-                    )}
-                </MainContainer>
-                <OptionsPanel>
-                    <div>Background: YES</div>
-                    <div>Font color</div>
-                    <input
-                        type="color"
-                        id="head"
-                        name="head"
-                        value={this.state.fontColor}
-                        onChange={this.changeColor}
-                    />
-                    <Button
-                        onClick={e => this.saveHint(e, this.props.room)}
-                        name="Save"
-                    />
-                    <Button
-                        onClick={this.props.closeAddHintWindow}
-                        name="Cancel"
-                    />
-                </OptionsPanel>
-            </Wrapper>
+                    )
+                }
+                adminPanel={
+                    <div>
+                        <div>Background: YES</div>
+                        <div>Font color</div>
+                        <input
+                            type="color"
+                            id="head"
+                            name="head"
+                            value={this.state.fontColor}
+                            onChange={this.changeColor}
+                        />
+                        <Button
+                            onClick={e => this.saveHint(e, this.props.room)}
+                            name="Save"
+                        />
+                        <Button
+                            onClick={this.props.closeAddHintWindow}
+                            name="Cancel"
+                        />
+                    </div>
+                }
+            />
         );
     }
 }

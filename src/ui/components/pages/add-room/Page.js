@@ -4,25 +4,10 @@ import { Link } from 'react-router-dom';
 import socket from '../../../sockets/socket';
 import PropTypes from 'prop-types';
 
+import RoomScreen from '../../complex/RoomScreen';
 import Button from '../../basic/Button';
 import dimensions from '../../../styles/dimensions';
 import colors from '../../../styles/colors';
-
-const Wrapper = styled.div`
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    background: url(${props => props.background});
-    background-position: center;
-    background-size: cover;
-`;
-
-const MainContainer = styled.div`
-    position: relative;
-    height: 100%;
-    color: ${props => props.fontColor};
-`;
 
 const Field = styled.div`
     margin: ${dimensions.marginBig};
@@ -81,8 +66,12 @@ export class AddRoomPage extends React.Component {
 
     render() {
         return (
-            <Wrapper id="wrapper" background={this.state.background}>
-                <MainContainer fontColor={this.state.fontColor}>
+            <RoomScreen
+                background={this.state.background}
+                fontColor={this.state.fontColor}
+                hint="This is a simple preview of default room screen"
+                room={this.props.room}
+                adminPanel={
                     <form onSubmit={this.addRoom}>
                         <Field>
                             Name
@@ -133,7 +122,6 @@ export class AddRoomPage extends React.Component {
                                 onChange={this.updateFormData}
                             />
                         </Field>
-
                         <Button
                             name="Add Room"
                             type="submit"
@@ -148,14 +136,15 @@ export class AddRoomPage extends React.Component {
                             <Button name="Cancel" />
                         </Link>
                     </form>
-                </MainContainer>
-            </Wrapper>
+                }
+            />
         );
     }
 }
 
 AddRoomPage.propTypes = {
-    history: PropTypes.array,
+    room: PropTypes.object,
+    history: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 };
 
 export default AddRoomPage;
