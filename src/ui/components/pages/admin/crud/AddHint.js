@@ -5,27 +5,18 @@ import { CheckSquare } from '@styled-icons/boxicons-regular/CheckSquare';
 
 import Button from '../../../basic/Button';
 import socket from '../../../../sockets/socket';
+import colors from '../../../../styles/colors';
 
 const Wrapper = styled.div`
     display: flex;
     width: 100vw;
     height: 100vh;
+    background: url(${props => props.background});
+    background-position: center;
     background-size: cover;
     position: absolute;
     top: 0;
     left: 0;
-
-    &:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: url(${props => props.background});
-        background-size: cover;
-        filter: blur(5px) brightness(0.4);
-    }
 `;
 
 const MainContainer = styled.div`
@@ -36,6 +27,7 @@ const MainContainer = styled.div`
     position: relative;
     height: 100%;
     width: 100%;
+    color: ${props => props.fontColor};
 `;
 
 const Clock = styled.div`
@@ -82,12 +74,14 @@ export default class AddHint extends React.Component {
             hintIndex: props.hintIndex,
             background: props.room.background,
             text: '',
+            fontColor: `${colors.fontColorMain}`,
         };
 
         this.showHintInput = this.showHintInput.bind(this);
         this.updateHint = this.updateHint.bind(this);
         this.acceptHint = this.acceptHint.bind(this);
         this.saveHint = this.saveHint.bind(this);
+        this.changeColor = this.changeColor.bind(this);
     }
 
     showHintInput() {
@@ -115,10 +109,16 @@ export default class AddHint extends React.Component {
         });
     }
 
+    changeColor(e) {
+        this.setState({
+            fontColor: e.target.value,
+        });
+    }
+
     render() {
         return (
             <Wrapper background={this.state.background}>
-                <MainContainer>
+                <MainContainer fontColor={this.state.fontColor}>
                     <Clock>21:37</Clock>
                     {!this.state.isEditingHint && (
                         <Hint onClick={this.showHintInput}>
@@ -140,6 +140,14 @@ export default class AddHint extends React.Component {
                 </MainContainer>
                 <OptionsPanel>
                     <div>Background: YES</div>
+                    <div>Font color</div>
+                    <input
+                        type="color"
+                        id="head"
+                        name="head"
+                        value={this.state.fontColor}
+                        onChange={this.changeColor}
+                    />
                     <Button
                         onClick={e => this.saveHint(e, this.props.room)}
                         name="Save"

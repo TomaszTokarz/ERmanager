@@ -6,29 +6,22 @@ import PropTypes from 'prop-types';
 
 import Button from '../../basic/Button';
 import dimensions from '../../../styles/dimensions';
+import colors from '../../../styles/colors';
 
 const Wrapper = styled.div`
     display: flex;
     width: 100vw;
     height: 100vh;
     position: relative;
-
-    &:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: url(${props => props.background});
-        background-size: cover;
-        filter: blur(5px) brightness(0.4);
-    }
+    background: url(${props => props.background});
+    background-position: center;
+    background-size: cover;
 `;
 
 const MainContainer = styled.div`
     position: relative;
     height: 100%;
+    color: ${props => props.fontColor};
 `;
 
 const Field = styled.div`
@@ -44,11 +37,13 @@ export class AddRoomPage extends React.Component {
             path: '',
             duration: 60,
             background: '',
+            fontColor: `${colors.fontColorMain}`,
         };
 
         this.updateFormData = this.updateFormData.bind(this);
         this.updateBackground = this.updateBackground.bind(this);
         this.addRoom = this.addRoom.bind(this);
+        this.changeColor = this.changeColor.bind(this);
     }
 
     updateFormData(e) {
@@ -78,10 +73,16 @@ export class AddRoomPage extends React.Component {
         this.props.history.push('/settings');
     }
 
+    changeColor(e) {
+        this.setState({
+            fontColor: e.target.value,
+        });
+    }
+
     render() {
         return (
             <Wrapper id="wrapper" background={this.state.background}>
-                <MainContainer>
+                <MainContainer fontColor={this.state.fontColor}>
                     <form onSubmit={this.addRoom}>
                         <Field>
                             Name
@@ -123,6 +124,15 @@ export class AddRoomPage extends React.Component {
                                 accept=".jpg, .jpeg, .png"
                             />
                         </Field>
+                        <Field>
+                            Font color
+                            <input
+                                type="color"
+                                name="fontColor"
+                                value={this.state.fontColor}
+                                onChange={this.updateFormData}
+                            />
+                        </Field>
 
                         <Button
                             name="Add Room"
@@ -145,7 +155,7 @@ export class AddRoomPage extends React.Component {
 }
 
 AddRoomPage.propTypes = {
-    history: PropTypes.string,
+    history: PropTypes.array,
 };
 
 export default AddRoomPage;

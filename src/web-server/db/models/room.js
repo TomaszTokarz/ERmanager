@@ -20,7 +20,6 @@ const Room = mongoose.model(
         status: {
             type: String,
             required: true,
-            trim: true,
         },
         duration: {
             type: Number,
@@ -30,15 +29,17 @@ const Room = mongoose.model(
             type: String,
             required: true,
         },
+        fontColor: {
+            type: String,
+            required: true,
+        },
         startTime: {
             type: Number,
             required: false,
-            trim: true,
         },
         endTime: {
             type: Number,
             required: false,
-            trim: true,
         },
     }),
 );

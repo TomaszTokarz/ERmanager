@@ -9,6 +9,7 @@ const Wrapper = styled.div`
     justify-content: space-between;
     flex-direction: column;
     background: url(${props => props.background});
+    background-position: center;
     background-size: cover;
     width: 320px;
     height: 180px;
@@ -40,4 +41,5 @@ Hint.propTypes = {
     index: PropTypes.number,
     text: PropTypes.string,
     addHint: PropTypes.func,
+    hint: PropTypes.object,
 };
