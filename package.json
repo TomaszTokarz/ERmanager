@@ -5,9 +5,9 @@
     "main": "index.js",
     "scripts": {
         "start": "node src/web-server/index.js",
-        "dev": "nodemon src/web-server/index.js",
-        "build": "webpack --mode development --watch",
-        "dev-server": "webpack-dev-server",
+        "build-production": "webpack -p --env production",
+        "start-dev": "nodemon src/web-server/index.js",
+        "build-dev": "webpack --mode development --watch",
         "lint": "eslint src",
         "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
         "test": "jest --config=jest.config.json"
