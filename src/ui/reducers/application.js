@@ -8,13 +8,13 @@ export default (
             rooms: [],
         },
     },
-    action,
+    { type, payload },
 ) => {
-    switch (action.type) {
+    switch (type) {
         case actionType.LOG_IN:
             return {
                 ...state,
-                ...action.payload,
+                ...payload,
             };
 
         case actionType.LOG_OUT:
@@ -23,13 +23,13 @@ export default (
         case actionType.SET_TOKEN:
             return {
                 ...state,
-                ...action.payload,
+                ...payload,
             };
 
         case actionType.SET_SETTINGS:
             return {
                 ...state,
-                ...action.payload,
+                ...payload,
             };
 
         default:

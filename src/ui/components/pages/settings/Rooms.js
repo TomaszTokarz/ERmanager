@@ -6,10 +6,6 @@ import Room from './Room';
 import Button from '../../basic/Button';
 
 export default class Rooms extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const { rooms } = this.props;
 

@@ -10,14 +10,12 @@ const Wrapper = styled.div`
 `;
 
 export default class Rooms extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
+        const { rooms } = this.props;
+
         return (
             <Wrapper>
-                {this.props.rooms.map(room => {
+                {rooms.map(room => {
                     return <Room key={room.name} room={room} />;
                 })}
             </Wrapper>

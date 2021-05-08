@@ -23,6 +23,8 @@ const InitComponent = () => <div>Init Page</div>;
 
 class Router extends React.Component {
     render() {
+        const { rooms, currentRoom } = this.props;
+
         return (
             <BrowserRouter>
                 <Switch>
@@ -30,8 +32,9 @@ class Router extends React.Component {
                     <Route path="/settings" component={SettingsPage} />
                     <Route path="/init" component={InitComponent} />
                     <Route path="/admin" component={AdminPage} />
+                    <Route path="/room/:roomname" />
                     <Route path="/add-room" component={AddRoomPage} />
-                    {this.props.rooms.map(room => {
+                    {rooms.map(room => {
                         return (
                             <Route
                                 key={room.name}
@@ -40,7 +43,7 @@ class Router extends React.Component {
                             />
                         );
                     })}
-                    <Route component={RoomPage} room={this.props.currentRoom} />
+                    <Route component={RoomPage} room={currentRoom} />
                 </Switch>
             </BrowserRouter>
         );
@@ -53,9 +56,12 @@ Router.propTypes = {
 };
 
 const mapStateToProps = state => {
+    const { rooms } = state.application.settings;
+    const { currentRoom } = state.application;
+
     return {
-        rooms: state.application.settings.rooms,
-        currentRoom: state.application.currentRoom,
+        rooms,
+        currentRoom,
     };
 };
 

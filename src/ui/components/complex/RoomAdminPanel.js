@@ -13,11 +13,9 @@ const AdminPanel = styled.div`
     }
 `;
 
-class RoomAdminPanel extends React.Component {
-    render() {
-        return <AdminPanel>{this.props.panel}</AdminPanel>;
-    }
-}
+const RoomAdminPanel = ({ panel, ...rest }) => (
+    <AdminPanel {...rest}>{panel}</AdminPanel>
+);
 
 RoomAdminPanel.propTypes = {
     panel: PropTypes.object,

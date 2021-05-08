@@ -12,9 +12,7 @@ const Wrapper = styled.div`
 `;
 
 export class AdminPage extends React.Component {
-    constructor(props) {
-        super(props);
-
+    componentDidMount() {
         socket.emit('get_settings', {
             location: location.pathname,
             token: 'fakeToken',

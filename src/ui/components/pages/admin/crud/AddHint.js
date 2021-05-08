@@ -37,53 +37,50 @@ export default class AddHint extends React.Component {
             text: '',
             fontColor: props.room.fontColor,
         };
-
-        this.showHintInput = this.showHintInput.bind(this);
-        this.updateHint = this.updateHint.bind(this);
-        this.acceptHint = this.acceptHint.bind(this);
-        this.saveHint = this.saveHint.bind(this);
-        this.changeColor = this.changeColor.bind(this);
     }
 
-    showHintInput() {
+    showHintInput = () => {
         this.setState({
             isEditingHint: true,
         });
-    }
+    };
 
-    updateHint(e) {
+    updateHint = e => {
         this.setState({
             text: e.target.value,
         });
-    }
+    };
 
-    acceptHint(e) {
+    acceptHint = () => {
         this.setState({
             isEditingHint: false,
         });
-    }
+    };
 
-    saveHint(e, room) {
+    saveHint = (e, room) => {
         socket.emit('add_hint', {
             ...this.state,
             roomId: room._id,
         });
-    }
+    };
 
-    changeColor(e) {
+    changeColor = e => {
         this.setState({
             fontColor: e.target.value,
         });
-    }
+    };
 
     render() {
+        const { background, fontColor, isEditingHint } = this.state;
+        const { room, closeAddHintWindow } = this.props;
+
         return (
             <RoomScreen
-                background={this.state.background}
-                fontColor={this.state.fontColor}
-                room={this.props.room}
+                background={background}
+                fontColor={fontColor}
+                room={room}
                 hint={
-                    !this.state.isEditingHint ? (
+                    !isEditingHint ? (
                         <Hint onClick={this.showHintInput}>
                             {this.state.text || 'Click here to edit hint'}
                         </Hint>
@@ -108,17 +105,14 @@ export default class AddHint extends React.Component {
                             type="color"
                             id="head"
                             name="head"
-                            value={this.state.fontColor}
+                            value={fontColor}
                             onChange={this.changeColor}
                         />
                         <Button
-                            onClick={e => this.saveHint(e, this.props.room)}
+                            onClick={e => this.saveHint(e, room)}
                             name="Save"
                         />
-                        <Button
-                            onClick={this.props.closeAddHintWindow}
-                            name="Cancel"
-                        />
+                        <Button onClick={closeAddHintWindow} name="Cancel" />
                     </div>
                 }
             />

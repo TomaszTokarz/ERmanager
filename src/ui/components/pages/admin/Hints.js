@@ -24,33 +24,29 @@ const LongButton = styled(Button)`
 `;
 
 export default class Hints extends React.Component {
-    constructor(props) {
-        super(props);
+    state = {
+        openAddHintWindow: false,
+        hintIndex: null,
+    };
 
-        this.state = {
-            openAddHintWindow: false,
-            hintIndex: null,
-        };
-
-        this.addHint = this.addHint.bind(this);
-        this.closeAddHintWindow = this.closeAddHintWindow.bind(this);
-    }
-
-    addHint(e, data) {
+    addHint = (e, data) => {
         this.setState({
             openAddHintWindow: true,
             hintIndex: data.hintIndex,
         });
-    }
+    };
 
-    closeAddHintWindow() {
+    closeAddHintWindow = () => {
         this.setState({
             openAddHintWindow: false,
             hintIndex: null,
         });
-    }
+    };
 
     render() {
+        const { room } = this.props;
+        const { openAddHintWindow, hintIndex } = this.state;
+
         return (
             <Wrapper>
                 Hints:
@@ -63,20 +59,20 @@ export default class Hints extends React.Component {
                     }
                 />
                 <HintsList>
-                    {this.props.room.hints.map((hint, index) => (
+                    {room.hints.map((hint, index) => (
                         <Hint
-                            key={hint.text}
+                            key={hint.text + '_' + index}
                             hint={hint}
                             index={index}
                             addHint={this.addHint}
                         />
                     ))}
                 </HintsList>
-                {this.state.openAddHintWindow && (
+                {openAddHintWindow && (
                     <AddHint
-                        visible={this.state.openAddHintWindow}
-                        room={this.props.room}
-                        hintIndex={this.state.hintIndex}
+                        visible={openAddHintWindow}
+                        room={room}
+                        hintIndex={hintIndex}
                         closeAddHintWindow={this.closeAddHintWindow}
                     />
                 )}

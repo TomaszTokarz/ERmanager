@@ -14,31 +14,22 @@ const Field = styled.div`
 `;
 
 export class AddRoomPage extends React.Component {
-    constructor(props) {
-        super(props);
+    state = {
+        name: '',
+        path: '',
+        duration: 60,
+        background: '',
+        fontColor: `${colors.fontColorMain}`,
+    };
 
-        this.state = {
-            name: '',
-            path: '',
-            duration: 60,
-            background: '',
-            fontColor: `${colors.fontColorMain}`,
-        };
-
-        this.updateFormData = this.updateFormData.bind(this);
-        this.updateBackground = this.updateBackground.bind(this);
-        this.addRoom = this.addRoom.bind(this);
-        this.changeColor = this.changeColor.bind(this);
-    }
-
-    updateFormData(e) {
+    updateFormData = e => {
         const field = {};
         field[e.target.name] = e.target.value;
 
         this.setState(field);
-    }
+    };
 
-    updateBackground(e) {
+    updateBackground = e => {
         const reader = new FileReader();
 
         reader.onload = (e => {
@@ -48,21 +39,21 @@ export class AddRoomPage extends React.Component {
         }).bind(this);
 
         reader.readAsDataURL(e.target.files[0]);
-    }
+    };
 
-    addRoom(e) {
+    addRoom = e => {
         e.preventDefault();
 
         socket.emit('add_room', this.state);
 
         this.props.history.push('/settings');
-    }
+    };
 
-    changeColor(e) {
+    changeColor = e => {
         this.setState({
             fontColor: e.target.value,
         });
-    }
+    };
 
     render() {
         return (

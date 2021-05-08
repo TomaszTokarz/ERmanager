@@ -33,19 +33,17 @@ const RoomName = styled.div`
 `;
 
 export default class Room extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
+        const { room } = this.props;
+
         return (
             <Wrapper>
                 <Header>
-                    <RoomName>{this.props.room.name}</RoomName>
+                    <RoomName>{room.name}</RoomName>
                     <HamburgerMenu />
                 </Header>
-                <StatusBar>{this.props.room.status}</StatusBar>
-                <Hints room={this.props.room} />
+                <StatusBar>{room.status}</StatusBar>
+                <Hints room={room} />
             </Wrapper>
         );
     }

@@ -13,9 +13,7 @@ const Item = styled.div`
 `;
 
 export class SettingsPage extends React.Component {
-    constructor(props) {
-        super(props);
-
+    componentDidMount() {
         socket.emit('get_settings', {
             location: location.pathname,
             token: 'fakeToken',
@@ -23,15 +21,17 @@ export class SettingsPage extends React.Component {
     }
 
     render() {
+        const { serverStatus, dbStatus, rooms } = this.props;
+
         return (
             <div>
                 <Item>
                     <button>Global settings</button>
                 </Item>
-                <Item>Application Status: {this.props.serverStatus}</Item>
-                <Item>Database Status: {this.props.dbStatus}</Item>
+                <Item>Application Status: {serverStatus}</Item>
+                <Item>Database Status: {dbStatus}</Item>
                 <Item>
-                    <Rooms rooms={this.props.rooms} />
+                    <Rooms rooms={rooms} />
                 </Item>
             </div>
         );
@@ -45,10 +45,12 @@ SettingsPage.propTypes = {
 };
 
 const mapStateToProps = state => {
+    const { server, db, rooms } = state.application.settings;
+
     return {
-        serverStatus: state.application.settings.server,
-        dbStatus: state.application.settings.db,
-        rooms: state.application.settings.rooms,
+        serverStatus: server,
+        dbStatus: db,
+        rooms,
     };
 };
 

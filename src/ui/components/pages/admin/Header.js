@@ -11,13 +11,11 @@ const Wrapper = styled.div`
 `;
 
 export default class Header extends React.Component {
-    constructor(props) {
-        super(props);
+    state = {
+        clock: '',
+    };
 
-        this.state = {
-            clock: '',
-        };
-
+    componentDidMount = () => {
         setInterval(() => {
             this.setState(() => {
                 return {
@@ -25,13 +23,15 @@ export default class Header extends React.Component {
                 };
             });
         }, 100);
-    }
+    };
 
     render() {
+        const { clock } = this.state;
+
         return (
             <Wrapper>
                 <div>Escape room - management application</div>
-                <div>{this.state.clock}</div>
+                <div>{clock}</div>
             </Wrapper>
         );
     }
